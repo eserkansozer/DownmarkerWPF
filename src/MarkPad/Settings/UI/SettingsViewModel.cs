@@ -41,6 +41,7 @@ namespace MarkPad.Settings.UI
         public PluginViewModel SelectedPlugin { get; set; }
         public IEnumerable<PluginViewModel> Plugins { get; private set; }
         public IndentType IndentType { get; set; }
+        public bool EnableMarkdownExtra { get; set; }
         public bool CanEditBlog { get { return currentBlog != null; } }
         public bool CanRemoveBlog { get { return currentBlog != null; } }
         public bool IsColorsInverted { get; set; }
@@ -135,6 +136,8 @@ namespace MarkPad.Settings.UI
             Plugins = plugins
                 .Where(plugin => !plugin.IsHidden)
                 .Select(plugin => pluginViewModelCreator(plugin));
+
+            EnableMarkdownExtra = settings.MarkdownExtraEnabled;
         }
         
 
@@ -204,6 +207,7 @@ namespace MarkPad.Settings.UI
             settings.IsEditorColorsInverted = IsColorsInverted;
             settings.IndentType = IndentType;
             settings.Language = SelectedLanguage;
+            settings.MarkdownExtraEnabled = EnableMarkdownExtra;
 
             settingsProvider.SaveSettings(settings);
         }
